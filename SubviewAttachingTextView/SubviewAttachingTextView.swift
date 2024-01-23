@@ -40,10 +40,18 @@ open class SubviewAttachingTextView: UITextView {
         }
     }
     
-    open func prepareForReuse() {
+    open func prepareForReuse(deletingTag: Int? = nil) {
         self.attachmentBehavior = SubviewAttachingTextViewBehavior()
         self.attributedText = nil
         self.commonInit()
+        
+        if let tag = deletingTag {
+            for view in self.subviews {
+                if view.tag == tag {
+                    view.removeFromSuperview()
+                }
+            }
+        }
     }
 
 }
